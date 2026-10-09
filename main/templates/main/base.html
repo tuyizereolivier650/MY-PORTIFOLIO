@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio of TUYIZERE Olivier, a software developer focused on practical web, mobile, and business solutions." />
+    <meta property="og:title" content="TUYIZERE Olivier | Software Developer" />
+    <meta property="og:description" content="Software developer building practical web, mobile, and business solutions in Rwanda." />
+    <meta property="og:type" content="website" />
+    <title>{% block title %}TUYIZERE Olivier | Software Developer{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar container" aria-label="Main navigation">
+        <a href="#home" class="brand" aria-label="Go to home section">TUYIZERE <span>Olivier</span></a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-menu" id="nav-menu">
+          <a href="#home" class="nav-link active">Home</a>
+          <a href="#about" class="nav-link">About</a>
+          <a href="#skills" class="nav-link">Skills</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#experience" class="nav-link">Experience</a>
+          <a href="#education" class="nav-link">Education</a>
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      {% if messages %}
+        <div class="message-container container">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <h3>TUYIZERE Olivier</h3>
+          <p>Software Developer</p>
+        </div>
+
+        <div class="footer-social">
+          {% if social_links.github %}
+            <a href="{{ social_links.github }}" target="_blank" rel="noreferrer">GitHub</a>
+          {% endif %}
+          {% if social_links.linkedin %}
+            <a href="{{ social_links.linkedin }}" target="_blank" rel="noreferrer">LinkedIn</a>
+          {% endif %}
+          {% if social_links.email %}
+            <a href="mailto:{{ social_links.email }}">Email</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <p>© <span id="current-year"></span> TUYIZERE Olivier. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="{% static 'main/js/main.js' %}"></script>
+  </body>
+</html>

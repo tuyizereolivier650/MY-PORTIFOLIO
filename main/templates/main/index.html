@@ -1,0 +1,287 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}TUYIZERE Olivier | Software Developer{% endblock %}
+
+{% block content %}
+<section id="home" class="hero section">
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <p class="eyebrow">Hello, I'm</p>
+      <h1>TUYIZERE Olivier</h1>
+      <h2>Software Developer</h2>
+      <p class="intro">
+        I am a software developer focused on practical digital innovation, user-centered products,
+        and business-ready solutions that create real value for people and organizations.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#projects" class="button primary">View My Projects</a>
+        <a href="#contact" class="button secondary">Contact Me</a>
+      </div>
+
+      <ul class="hero-meta" aria-label="Professional strengths">
+        <li>Innovation</li>
+        <li>Web Development</li>
+        <li>Mobile Applications</li>
+        <li>Business Solutions</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual reveal" aria-label="Profile picture panel">
+      <div class="profile-card">
+        <img
+          src="{% static 'main/images/profile-photo.PNG' %}"
+          alt="TUYIZERE Olivier profile picture"
+          onerror="this.onerror=null;this.src='{% static 'main/images/profile-illustration.svg' %}';"
+        />
+        <div class="profile-badge">Available for software projects</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow accent">About Me</p>
+      <h2>Developer with practical experience and a strong problem-solving mindset</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <p>
+          I am a software developer with a background in e-commerce and software development,
+          interested in building practical web, mobile, and business solutions that help people
+          and organizations work more effectively.
+        </p>
+        <p>
+          My work combines problem-solving, digital innovation, and business understanding to create
+          software that is both technically sound and useful in real-world situations.
+        </p>
+        <p>
+          I also work as a TVET trainer in software development, helping learners grow in programming,
+          practical project work, and software thinking through structured guidance and hands-on learning.
+        </p>
+      </div>
+
+      <div class="about-list reveal">
+        <div class="mini-card">
+          <h3>Software development interests</h3>
+          <ul>
+            <li>Problem-solving</li>
+            <li>Web development</li>
+            <li>Mobile application development</li>
+            <li>Database systems</li>
+            <li>E-commerce systems</li>
+            <li>Software engineering</li>
+            <li>Innovation-driven product design</li>
+          </ul>
+        </div>
+        <div class="mini-card accent-card">
+          <h3>Training</h3>
+          <p>I also work as a TVET trainer in software development and continuously improve my knowledge in computer science and emerging technologies.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="section section-alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow accent">Technical Skills</p>
+      <h2>Core skills for software development and delivery</h2>
+    </div>
+
+    <div class="skills-grid">
+      {% regroup skills by category as skill_groups %}
+      {% for group in skill_groups %}
+        <div class="skill-group reveal">
+          <h3>{{ group.grouper }}</h3>
+          <ul class="skill-list">
+            {% for skill in group.list %}
+              <li>
+                <span>{{ skill.name }}</span>
+                {% if skill.proficiency %}<small>{{ skill.proficiency }}</small>{% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow accent">Projects</p>
+      <h2>Selected work and practical software solutions</h2>
+    </div>
+
+    <div class="projects-grid">
+      {% for project in projects %}
+        <article class="project-card reveal">
+          {% if project.image %}
+            <img src="{{ project.image }}" alt="{{ project.title }} project preview" />
+          {% else %}
+            <div class="project-placeholder" aria-hidden="true">
+              <span>{{ project.title }}</span>
+            </div>
+          {% endif %}
+
+          <div class="project-content">
+            <div class="project-tag">{% if project.featured %}Featured{% else %}Project{% endif %}</div>
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.description }}</p>
+
+            <div class="tech-stack">
+              {% for tech in project.tech_list %}
+                <span>{{ tech }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="project-actions">
+              {% if project.github_url %}
+                <a href="{{ project.github_url }}" target="_blank" rel="noreferrer" class="button secondary small">GitHub</a>
+              {% endif %}
+              {% if project.live_url %}
+                <a href="{{ project.live_url }}" target="_blank" rel="noreferrer" class="button primary small">Live Demo</a>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      {% empty %}
+        <div class="empty-state reveal">
+          <p>No projects available yet. Add project details through the Django admin panel.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="section section-alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow accent">Experience</p>
+      <h2>Professional experience in technical education and software development</h2>
+    </div>
+
+    <div class="timeline">
+      {% for item in experiences %}
+        <article class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h3>{{ item.position }}</h3>
+            <p class="timeline-meta">
+              {% if item.company %}{{ item.company }}{% endif %}
+              {% if item.start_date or item.end_date %}
+                · {{ item.start_date|date:"M Y" }}{% if item.current %} - Present{% elif item.end_date %} - {{ item.end_date|date:"M Y" }}{% endif %}
+              {% endif %}
+            </p>
+            <p>{{ item.description }}</p>
+          </div>
+        </article>
+      {% empty %}
+        <p class="empty-state reveal">Experience entries will appear here when added in the admin.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="education" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow accent">Education</p>
+      <h2>Academic background and current studies</h2>
+    </div>
+
+    <div class="education-grid">
+      {% for item in educations %}
+        <article class="education-card reveal">
+          <p class="education-label">{{ item.institution }}</p>
+          <h3>{{ item.qualification }}</h3>
+          {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+        </article>
+      {% empty %}
+        <p class="empty-state reveal">Education details will appear here when added in the admin.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="services" class="section section-alt">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="eyebrow accent">Services</p>
+      <h2>Solutions I can provide as a software developer</h2>
+    </div>
+
+    <div class="services-grid">
+      {% for service in services %}
+        <article class="service-card reveal">
+          <div class="service-icon">01</div>
+          <h3>{{ service.title }}</h3>
+          <p>{{ service.description }}</p>
+        </article>
+      {% empty %}
+        <p class="empty-state reveal">Service offerings will appear here when added in the admin.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section contact-section">
+  <div class="container contact-grid">
+    <div class="contact-copy reveal">
+      <p class="eyebrow accent">Contact</p>
+      <h2>Let’s build something practical and useful</h2>
+      <p>
+        I am open to software development opportunities, technical training collaboration,
+        and projects that require a clear, dependable, and solution-oriented developer.
+      </p>
+
+      <div class="contact-summary">
+        <div>
+          <span>Email</span>
+          <a href="mailto:{{ social_links.email|default:'olivier@example.com' }}">{{ social_links.email|default:'olivier@example.com' }}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-card reveal">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-grid">
+          <div class="field">
+            <label for="id_name">{{ contact_form.name.label }}</label>
+            {{ contact_form.name }}
+            {% if contact_form.name.errors %}<div class="field-error">{{ contact_form.name.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field">
+            <label for="id_email">{{ contact_form.email.label }}</label>
+            {{ contact_form.email }}
+            {% if contact_form.email.errors %}<div class="field-error">{{ contact_form.email.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field full-width">
+            <label for="id_subject">{{ contact_form.subject.label }}</label>
+            {{ contact_form.subject }}
+            {% if contact_form.subject.errors %}<div class="field-error">{{ contact_form.subject.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field full-width">
+            <label for="id_message">{{ contact_form.message.label }}</label>
+            {{ contact_form.message }}
+            {% if contact_form.message.errors %}<div class="field-error">{{ contact_form.message.errors|striptags }}</div>{% endif %}
+          </div>
+        </div>
+
+        <button type="submit" class="button primary submit-button">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}
